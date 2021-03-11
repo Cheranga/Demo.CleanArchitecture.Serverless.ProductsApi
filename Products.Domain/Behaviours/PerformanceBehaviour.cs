@@ -6,11 +6,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Products.Domain.Behaviours
 {
-    public class ProductMicroservicePerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>> where TRequest : IValidatableRequest
+    public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>> where TRequest : IValidatable
     {
-        private readonly ILogger<ProductMicroservicePerformanceBehaviour<TRequest, TResponse>> _logger;
+        private readonly ILogger<PerformanceBehaviour<TRequest, TResponse>> _logger;
 
-        public ProductMicroservicePerformanceBehaviour(ILogger<ProductMicroservicePerformanceBehaviour<TRequest, TResponse>> logger)
+        public PerformanceBehaviour(ILogger<PerformanceBehaviour<TRequest, TResponse>> logger)
         {
             _logger = logger;
         }
@@ -24,7 +24,7 @@ namespace Products.Domain.Behaviours
 
             stopWatch.Stop();
 
-            _logger.LogInformation("Handling of {request} ended, time taken {timeTaken} ms.", typeof(TRequest).Name, stopWatch.ElapsedMilliseconds);
+            _logger.LogInformation("{request} with {correlationId} ended, time taken {timeTaken} ms.", typeof(TRequest).Name, request.CorrelationId, stopWatch.ElapsedMilliseconds);
 
             return response;
         }

@@ -35,7 +35,7 @@ namespace Products.Api.Functions
                 return new OkResult();
             }
 
-            return new BadRequestObjectResult(operation.ErrorMessage);
+            return new BadRequestObjectResult(operation);
         }
     }
 }

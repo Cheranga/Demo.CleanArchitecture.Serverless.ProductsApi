@@ -43,8 +43,8 @@ namespace Products.Api.Tests
             var mediatrAssemblies = new[] { typeof(Startup).Assembly, typeof(Bootstrapper).Assembly };
 
             services.AddMediatR(mediatrAssemblies);
-            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ProductMicroserviceValidationBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
-            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ProductMicroservicePerformanceBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
+            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ValidationBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
+            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, PerformanceBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
         }
     }
 }
