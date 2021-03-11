@@ -1,9 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Products.Application.Requests;
+using Products.Application.Responses;
 using Products.Domain;
+using Products.Domain.Commands;
 
-namespace Products.Application
+namespace Products.Application.Handlers
 {
     public class InsertProductRequestHandler : IRequestHandler<InsertProductRequest, Result<InsertProductResponse>>
     {
@@ -20,7 +23,7 @@ namespace Products.Application
             {
                 CorrelationId = request.CorrelationId,
                 Code = request.Code,
-                Description = request.Description
+                Name = request.Description
             };
 
             var operation = await _mediator.Send(createProductCommand, cancellationToken);

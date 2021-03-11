@@ -5,6 +5,7 @@ using MediatR;
 using Products.Api.Dto.Requests;
 using Products.Api.Dto.Responses;
 using Products.Application;
+using Products.Application.Requests;
 using Products.Domain;
 
 namespace Products.Api.Handlers

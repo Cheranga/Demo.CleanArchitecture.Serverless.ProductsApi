@@ -6,12 +6,14 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Products.Application;
 using Products.Domain;
+using Products.Domain.Models;
+using Products.Domain.Queries;
 
 namespace Products.DataAccess.QueryHandlers
 {
     public class GetProductByCodeQueryHandler : IRequestHandler<GetProductByCodeQuery, Result<Product>>
     {
-        private const string SqlQuery = "select * from Products where productcode=@productCode";
+        private const string SqlQuery = "select * from Products where code=@Code";
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly ILogger<GetProductByCodeQueryHandler> _logger;
 
@@ -27,7 +29,7 @@ namespace Products.DataAccess.QueryHandlers
             {
                 using (var connection = _dbConnectionFactory.GetConnection())
                 {
-                    var commandDefinition = new CommandDefinition(SqlQuery, new {productCode = query.Code});
+                    var commandDefinition = new CommandDefinition(SqlQuery, query);
                     var product = await connection.QueryFirstOrDefaultAsync<Product>(commandDefinition);
 
                     return Result<Product>.Success(product);

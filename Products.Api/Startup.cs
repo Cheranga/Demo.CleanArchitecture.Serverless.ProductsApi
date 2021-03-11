@@ -6,10 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Products.Api;
-using Products.Api.Dto.Requests;
-using Products.Api.Dto.Responses;
 using Products.Domain;
-using Products.Domain.Behaviours;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -20,9 +17,11 @@ namespace Products.Api
         public override void Configure(IFunctionsHostBuilder builder)
         {
             var services = builder.Services;
+            var configuration = GetConfigurationRoot(builder);
 
             RegisterMediatr(services);
             RegisterValidators(services);
+            DataAccess.Bootstrapper.UseProductsDataAccess(services, configuration);
         }
 
         private void RegisterValidators(IServiceCollection services)
@@ -30,6 +29,8 @@ namespace Products.Api
             var validatorAssemblies = new[] {typeof(Startup).Assembly};
 
             services.AddValidatorsFromAssemblies(validatorAssemblies);
+
+            // TODO: Add validators from application and dataaccess modules.
         }
 
         protected virtual void RegisterMediatr(IServiceCollection services)
@@ -37,7 +38,7 @@ namespace Products.Api
             var mediatrAssemblies = new[] {typeof(Startup).Assembly, typeof(Bootstrapper).Assembly, typeof(Application.Bootstrapper).Assembly, typeof(DataAccess.Bootstrapper).Assembly};
 
             services.AddMediatR(mediatrAssemblies);
-            
+
             services.UseDomain();
         }
 

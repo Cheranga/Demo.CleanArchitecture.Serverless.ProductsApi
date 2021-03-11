@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Products.Domain;
+using Products.Domain.Models;
 
-namespace Products.Application
+namespace Products.Domain.Queries
 {
     public class GetProductByCodeQuery : IRequest<Result<Product>>, IValidatable
     {

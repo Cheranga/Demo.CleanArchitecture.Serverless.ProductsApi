@@ -7,19 +7,22 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Products.Application;
 using Products.Domain;
+using Products.Domain.Commands;
+using Products.Domain.Models;
+using Products.Domain.Queries;
 
 namespace Products.DataAccess.CommandHandlers
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<Product>>
     {
-        private const string InsertCommandSql = "insert into Products (ProductCode, ProductName) " +
-                                             "output inserted.Id, inserted.ProductCode, inserted.ProductName " +
-                                             "values (@ProductCode, @ProductName)";
+        private const string InsertCommandSql = "insert into Products (Code, Name) " +
+                                             "output inserted.Id, inserted.Code, inserted.Name " +
+                                             "values (@Code, @Name)";
 
 
-        private const string UpdateCommandSql = "update Products set ProductCode=@ProductCode, ProductName=@ProductName " +
-                                             "output inserted.Id, inserted.ProductCode, inserted.ProductName " +
-                                             "where ProductCode=@ProductCode";
+        private const string UpdateCommandSql = "update Products set Name=@Name " +
+                                             "output inserted.Id, inserted.Code, inserted.Name " +
+                                             "where Code=@Code";
 
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly ILogger<CreateProductCommandHandler> _logger;
@@ -37,9 +40,13 @@ namespace Products.DataAccess.CommandHandlers
         {
             try
             {
-                return Result<Product>.Success(new Product());
+                var getProductQuery = new GetProductByCodeQuery
+                {
+                    CorrelationId = command.CorrelationId,
+                    Code = command.Code
+                };
 
-                var getProductOperation = await _mediator.Send(new GetProductByCodeQuery{Code = command.Code}, cancellationToken);
+                var getProductOperation = await _mediator.Send(getProductQuery, cancellationToken);
                 if (!getProductOperation.Status)
                 {
                     _logger.LogError("Error when getting the product information.");
