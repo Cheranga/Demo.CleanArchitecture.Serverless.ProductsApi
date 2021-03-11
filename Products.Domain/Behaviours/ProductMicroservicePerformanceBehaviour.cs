@@ -6,16 +6,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Products.Domain.Behaviours
 {
-    public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class ProductMicroservicePerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>> where TRequest : IValidatableRequest
     {
-        private readonly ILogger<PerformanceBehaviour<TRequest, TResponse>> _logger;
+        private readonly ILogger<ProductMicroservicePerformanceBehaviour<TRequest, TResponse>> _logger;
 
-        public PerformanceBehaviour(ILogger<PerformanceBehaviour<TRequest, TResponse>> logger)
+        public ProductMicroservicePerformanceBehaviour(ILogger<ProductMicroservicePerformanceBehaviour<TRequest, TResponse>> logger)
         {
             _logger = logger;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Result<TResponse>> next)
         {
             var stopWatch = new Stopwatch();
             stopWatch.Start();

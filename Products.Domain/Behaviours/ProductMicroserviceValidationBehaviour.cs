@@ -7,12 +7,12 @@ using Products.Domain.Extensions;
 
 namespace Products.Domain.Behaviours
 {
-    public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>> where TRequest : IValidatableRequest
+    public class ProductMicroserviceValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>> where TRequest : IValidatableRequest
     {
-        private readonly ILogger<ValidationBehaviour<TRequest, TResponse>> _logger;
+        private readonly ILogger<ProductMicroserviceValidationBehaviour<TRequest, TResponse>> _logger;
         private readonly IValidator<TRequest> _validator;
 
-        public ValidationBehaviour(IValidator<TRequest> validator, ILogger<ValidationBehaviour<TRequest, TResponse>> logger)
+        public ProductMicroserviceValidationBehaviour(IValidator<TRequest> validator, ILogger<ProductMicroserviceValidationBehaviour<TRequest, TResponse>> logger)
         {
             _validator = validator;
             _logger = logger;
@@ -26,8 +26,9 @@ namespace Products.Domain.Behaviours
 
             if (!validationResult.IsValid)
             {
-                _logger.LogWarning("Validation error: {errors}", validationResult.ToErrorMessage());
-                return Result<TResponse>.Failure(validationResult);
+                var errorMessage = string.Join(", ", validationResult.ToErrorMessage());
+                _logger.LogWarning("Validation error: {errors}", errorMessage);
+                return Result<TResponse>.Failure(errorMessage);
             }
 
             var operation = await next();

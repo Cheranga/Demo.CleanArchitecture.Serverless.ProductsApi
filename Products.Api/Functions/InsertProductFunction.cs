@@ -30,9 +30,12 @@ namespace Products.Api.Functions
 
             var operation = await _mediator.Send(insertProductRequestDto);
 
-            // TODO: Depending on the operation send the correct response.
+            if (operation.Status)
+            {
+                return new OkResult();
+            }
 
-            return new OkResult();
+            return new BadRequestObjectResult(operation.ErrorMessage);
         }
     }
 }
