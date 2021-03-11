@@ -7,6 +7,7 @@ namespace Products.Api.Validators
     {
         public InsertProductRequestDtoValidator()
         {
+            RuleFor(x => x.CorrelationId).NotNull().NotEmpty();
             RuleFor(x => x.ProductCode).NotNull().NotEmpty();
             RuleFor(x => x.ProductDescription).NotNull().NotEmpty();
         }

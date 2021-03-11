@@ -32,16 +32,12 @@ namespace Products.Api
             services.AddValidatorsFromAssemblies(validatorAssemblies);
         }
 
-        private void RegisterMediatr(IServiceCollection services)
+        protected virtual void RegisterMediatr(IServiceCollection services)
         {
             var mediatrAssemblies = new[] {typeof(Startup).Assembly, typeof(Bootstrapper).Assembly};
 
             services.AddMediatR(mediatrAssemblies);
-
-
-            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ProductMicroserviceValidationBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
-            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ProductMicroservicePerformanceBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
-
+            
             services.UseDomain();
         }
 
