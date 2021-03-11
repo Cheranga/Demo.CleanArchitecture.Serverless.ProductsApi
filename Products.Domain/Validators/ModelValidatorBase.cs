@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 
-namespace Products.Api.Validators
+namespace Products.Domain.Validators
 {
     public abstract class ModelValidatorBase<T> : AbstractValidator<T>
     {

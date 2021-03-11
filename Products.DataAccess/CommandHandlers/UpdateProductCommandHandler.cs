@@ -11,30 +11,28 @@ using Products.Domain.Models;
 
 namespace Products.DataAccess.CommandHandlers
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<Product>>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<Product>>
     {
-        private const string InsertCommandSql = "insert into Products (Code, Name) " +
+        private const string UpdateCommandSql = "update Products set Name=@Name " +
                                                 "output inserted.Id, inserted.Code, inserted.Name " +
-                                                "values (@Code, @Name)";
-
+                                                "where Code=@Code";
 
         private readonly IDbConnectionFactory _dbConnectionFactory;
-        private readonly ILogger<CreateProductCommandHandler> _logger;
+        private readonly ILogger<UpdateProductCommandHandler> _logger;
 
-
-        public CreateProductCommandHandler(IDbConnectionFactory dbConnectionFactory, ILogger<CreateProductCommandHandler> logger)
+        public UpdateProductCommandHandler(IDbConnectionFactory dbConnectionFactory, ILogger<UpdateProductCommandHandler> logger)
         {
             _dbConnectionFactory = dbConnectionFactory;
             _logger = logger;
         }
 
-        public async Task<Result<Product>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+        public async Task<Result<Product>> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
         {
             try
             {
                 using (var connection = _dbConnectionFactory.GetConnection())
                 {
-                    var upsertedProducts = await connection.QueryAsync<Product>(InsertCommandSql, command);
+                    var upsertedProducts = await connection.QueryAsync<Product>(UpdateCommandSql, command);
                     var upsertedProduct = upsertedProducts.FirstOrDefault();
                     if (upsertedProduct == null)
                     {

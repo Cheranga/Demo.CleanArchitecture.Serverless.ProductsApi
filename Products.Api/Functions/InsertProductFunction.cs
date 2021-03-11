@@ -26,7 +26,7 @@ namespace Products.Api.Functions
             HttpRequest request)
         {
             var correlationId = request.GetHeaderValue("correlationId");
-            var insertProductRequestDto = await request.ToModel<InsertProductRequestDto>(dto => dto.CorrelationId = correlationId);
+            var insertProductRequestDto = await request.ToModel<UpsertProductRequestDto>(dto => dto.CorrelationId = correlationId);
 
             var operation = await _mediator.Send(insertProductRequestDto);
 

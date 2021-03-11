@@ -38,7 +38,7 @@ namespace Products.Api.Tests
         {
             var function = new InsertProductFunction(_mediator, _logger);
 
-            var dto = _fixture.Create<InsertProductRequestDto>();
+            var dto = _fixture.Create<UpsertProductRequestDto>();
             dto.CorrelationId = string.Empty;
 
             var mockedHttpRequest = await GetMockedRequest(dto);

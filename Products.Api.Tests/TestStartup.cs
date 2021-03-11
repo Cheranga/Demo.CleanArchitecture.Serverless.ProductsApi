@@ -31,20 +31,15 @@ namespace Products.Api.Tests
             //
             // If required override the dependencies here
             //
-            //var services = builder.Services;
-            //services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ProductMicroserviceValidationBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
-            //services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ProductMicroservicePerformanceBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
-
-
         }
 
         protected override void RegisterMediatr(IServiceCollection services)
         {
-            var mediatrAssemblies = new[] { typeof(Startup).Assembly, typeof(Bootstrapper).Assembly };
+            var mediatrAssemblies = new[] { typeof(Startup).Assembly, typeof(Bootstrapper).Assembly, typeof(Application.Bootstrapper).Assembly, typeof(DataAccess.Bootstrapper).Assembly };
 
             services.AddMediatR(mediatrAssemblies);
-            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, ValidationBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
-            services.AddTransient<IPipelineBehavior<InsertProductRequestDto, Result<InsertProductResponseDto>>, PerformanceBehaviour<InsertProductRequestDto, InsertProductResponseDto>>();
+            services.AddTransient<IPipelineBehavior<UpsertProductRequestDto, Result<UpsertProductResponseDto>>, ValidationBehaviour<UpsertProductRequestDto, UpsertProductResponseDto>>();
+            services.AddTransient<IPipelineBehavior<UpsertProductRequestDto, Result<UpsertProductResponseDto>>, PerformanceBehaviour<UpsertProductRequestDto, UpsertProductResponseDto>>();
         }
     }
 }

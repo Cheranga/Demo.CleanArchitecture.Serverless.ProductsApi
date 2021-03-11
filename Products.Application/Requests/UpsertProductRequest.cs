@@ -4,7 +4,7 @@ using Products.Domain;
 
 namespace Products.Application.Requests
 {
-    public class InsertProductRequest : IRequest<Result<InsertProductResponse>>, IValidatable
+    public class UpsertProductRequest : IRequest<Result<UpsertProductResponse>>, IValidatable
     {
         public string CorrelationId { get; set; }
         public string Code { get; set; }

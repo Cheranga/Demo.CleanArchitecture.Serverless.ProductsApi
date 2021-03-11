@@ -26,7 +26,7 @@ namespace Products.Api
 
         private void RegisterValidators(IServiceCollection services)
         {
-            var validatorAssemblies = new[] {typeof(Startup).Assembly};
+            var validatorAssemblies = new[] {typeof(Startup).Assembly, typeof(Application.Bootstrapper).Assembly, typeof(Bootstrapper).Assembly};
 
             services.AddValidatorsFromAssemblies(validatorAssemblies);
 

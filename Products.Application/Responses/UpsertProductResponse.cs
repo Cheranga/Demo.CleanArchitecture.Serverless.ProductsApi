@@ -1,6 +1,6 @@
 ﻿namespace Products.Application.Responses
 {
-    public class InsertProductResponse
+    public class UpsertProductResponse
     {
     }
 }

@@ -10,32 +10,32 @@ using Products.Domain;
 
 namespace Products.Api.Handlers
 {
-    public class InsertProductRequestHandler : IRequestHandler<InsertProductRequestDto, Result<InsertProductResponseDto>>
+    public class UpsertProductRequestHandler : IRequestHandler<UpsertProductRequestDto, Result<UpsertProductResponseDto>>
     {
         private readonly IMediator _mediator;
 
-        public InsertProductRequestHandler(IMediator mediator)
+        public UpsertProductRequestHandler(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        public async Task<Result<InsertProductResponseDto>> Handle(InsertProductRequestDto request, CancellationToken cancellationToken)
+        public async Task<Result<UpsertProductResponseDto>> Handle(UpsertProductRequestDto request, CancellationToken cancellationToken)
         {
-            var insertProductRequest = new InsertProductRequest
+            var upsertProductRequest = new UpsertProductRequest
             {
                 CorrelationId = request.CorrelationId,
                 Code = request.ProductCode,
                 Description = request.ProductDescription
             };
 
-            var operation = await _mediator.Send(insertProductRequest, cancellationToken);
+            var operation = await _mediator.Send(upsertProductRequest, cancellationToken);
 
             if (operation.Status)
             {
-                return Result<InsertProductResponseDto>.Success(new InsertProductResponseDto());
+                return Result<UpsertProductResponseDto>.Success(new UpsertProductResponseDto());
             }
 
-            return Result<InsertProductResponseDto>.Failure(operation.Validation);
+            return Result<UpsertProductResponseDto>.Failure(operation.Validation);
         }
     }
 }
