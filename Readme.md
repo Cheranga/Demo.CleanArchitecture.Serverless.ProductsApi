@@ -1,5 +1,6 @@
-﻿# Things,
+﻿# Things to do,
 
+- [] Swagger
 - [] Health checks
 - [] Versioning
 
