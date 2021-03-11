@@ -1,6 +1,6 @@
 ﻿namespace Products.Api.Dto.Responses
 {
-    public class GetProductResponse
+    public class GetProductResponseDto
     {
 
     }

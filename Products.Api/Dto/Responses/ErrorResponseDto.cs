@@ -2,7 +2,7 @@
 
 namespace Products.Api.Dto.Responses
 {
-    public class ErrorResponse
+    public class ErrorResponseDto
     {
         public string ErrorCode { get; set; }
         public string ErrorDescription { get; set; }
