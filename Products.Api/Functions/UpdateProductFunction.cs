@@ -9,23 +9,23 @@ using Products.Api.Extensions;
 
 namespace Products.Api.Functions
 {
-    public class InsertProductFunction
+    public class UpdateProductFunction
     {
         private readonly IMediator _mediator;
 
-        public InsertProductFunction(IMediator mediator)
+        public UpdateProductFunction(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [FunctionName(nameof(InsertProductFunction))]
-        public async Task<IActionResult> InsertProduct([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "products")]
+        [FunctionName(nameof(UpdateProductFunction))]
+        public async Task<IActionResult> InsertProduct([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "products")]
             HttpRequest request)
         {
             var correlationId = request.GetHeaderValue("correlationId");
-            var insertProductRequestDto = await request.ToModel<UpsertProductRequestDto>(dto => dto.CorrelationId = correlationId);
+            var updateProductRequestDto = await request.ToModel<UpsertProductRequestDto>(dto => dto.CorrelationId = correlationId);
 
-            var operation = await _mediator.Send(insertProductRequestDto);
+            var operation = await _mediator.Send(updateProductRequestDto);
 
             if (operation.Status)
             {

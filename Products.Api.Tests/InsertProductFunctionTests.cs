@@ -36,7 +36,7 @@ namespace Products.Api.Tests
         [Fact]
         public async Task Test()
         {
-            var function = new InsertProductFunction(_mediator, _logger);
+            var function = new InsertProductFunction(_mediator);
 
             var dto = _fixture.Create<UpsertProductRequestDto>();
             dto.CorrelationId = string.Empty;
