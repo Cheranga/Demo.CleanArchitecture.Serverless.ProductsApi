@@ -20,6 +20,11 @@ namespace Products.Domain.Behaviours
 
         public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Result<TResponse>> next)
         {
+            if (_validator == null)
+            {
+                return await next();
+            }
+
             var requestType = typeof(TRequest).Name;
 
             var validationResult = await _validator.ValidateAsync(request, cancellationToken);

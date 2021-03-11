@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Products.Api.Dto.Requests;
 using Products.Api.Dto.Responses;
+using Products.Application;
 using Products.Domain;
 
 namespace Products.Api.Handlers
@@ -19,10 +20,21 @@ namespace Products.Api.Handlers
 
         public async Task<Result<InsertProductResponseDto>> Handle(InsertProductRequestDto request, CancellationToken cancellationToken)
         {
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            var insertProductRequest = new InsertProductRequest
+            {
+                CorrelationId = request.CorrelationId,
+                Code = request.ProductCode,
+                Description = request.ProductDescription
+            };
 
-            // TODO: Mapping and calling the sevice request.
-            return Result<InsertProductResponseDto>.Success(new InsertProductResponseDto());
+            var operation = await _mediator.Send(insertProductRequest, cancellationToken);
+
+            if (operation.Status)
+            {
+                return Result<InsertProductResponseDto>.Success(new InsertProductResponseDto());
+            }
+
+            return Result<InsertProductResponseDto>.Failure(operation.Validation);
         }
     }
 }

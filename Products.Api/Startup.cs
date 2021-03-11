@@ -34,7 +34,7 @@ namespace Products.Api
 
         protected virtual void RegisterMediatr(IServiceCollection services)
         {
-            var mediatrAssemblies = new[] {typeof(Startup).Assembly, typeof(Bootstrapper).Assembly};
+            var mediatrAssemblies = new[] {typeof(Startup).Assembly, typeof(Bootstrapper).Assembly, typeof(Application.Bootstrapper).Assembly, typeof(DataAccess.Bootstrapper).Assembly};
 
             services.AddMediatR(mediatrAssemblies);
             
