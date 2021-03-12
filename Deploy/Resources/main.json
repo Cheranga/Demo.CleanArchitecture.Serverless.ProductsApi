@@ -53,6 +53,26 @@
         "funcAppName": {
             "type": "string",
             "defaultValue": "TBD"
+        },
+        "sqlServerName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "databaseName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "adminUserName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "defaultValue": "TBD"
+        },
+        "allowedIpAddresses": {
+            "type": "array",
+            "defaultValue": [ "TBD" ]
         }
     },
     "functions": [],
@@ -60,7 +80,9 @@
         "templateUri": "[concat('https://',parameters('sharedStorageName'),'.blob.core.windows.net/',parameters('sharedContainerName'))]",
         "storageAccountDeployment": "[concat('stg-', parameters('sgName'),'-',parameters('buildNumber'))]",
         "appInsightsDeployment": "[concat('appins-', parameters('funcAppName'),parameters('buildNumber'))]",
-        "aspDeployment": "[concat('asp-', parameters('funcAppName'),parameters('buildNumber'))]"
+        "aspDeployment": "[concat('asp-', parameters('funcAppName'),parameters('buildNumber'))]",
+        "databaseDeployment": "[concat(parameters('sqlServerName'),'-',parameters('buildNumber'),'-deployment')]"
+
     },
     "resources": [
         {
@@ -131,6 +153,38 @@
                     },
                     "planTier": {
                         "value": "[parameters('planTier')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('databaseDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/Database/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "serverName": {
+                        "value": "[parameters('sqlServerName')]"
+                    },
+                    "serverLocation": {
+                        "value": "[parameters('rgLocation')]"
+                    },
+                    "databaseName": {
+                        "value": "[parameters('databaseName')]"
+                    },
+                    "adminUserName": {
+                        "value": "[parameters('adminUserName')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "allowedIpAddresses": {
+                        "value": "[parameters('allowedIpAddresses')]"
                     }
                 }
             }

@@ -62,4 +62,8 @@ steps:
         -planName "$(planName)" 
         -planSku "$(planSku)" 
         -planTier "$(planTier)" 
+        -sqlServerName "$(sqlServerName)" 
+        -databaseName "$(databaseName)" 
+        -adminUserName "$(adminUserName)" 
+        -adminPassword "$(adminPassword)" 
                
