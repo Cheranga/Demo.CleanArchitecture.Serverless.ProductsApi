@@ -1,24 +1,15 @@
 variables:
-  - group: CommsApiDev  
   - name: environmentName
-    value: qtrd
+    value: dev
   - name: funcAppName
-    value: whispir-callback-api-agl-$(environmentName)
+    value: func-cc-productsapi-$(environmentName)
   - name: keyVaultName
-    value: whispir-callback-$(environmentName)-kv    
+    value: kv-productsapi-$(environmentName) 
   - name: rgName
-    value: "communications-agl-$(environmentName)-rg"
+    value: "rg-cc-productsapi-$(environmentName)"
   - name: sharedStorageName
-    value: "sgcommsarm$(environmentName)"
+    value: "starmtemplates$(environmentName)"
   - name: sharedContainerName
-    value: "$(funcAppName)armtemplates"
+    value: "$(funcAppName)"
   - name: sgName
-    value: "whispircallback$(environmentName)"    
-  - name: commsApiSettingsClientId
-    value: "479c4ccd-c84c-488c-8732-87a741fc4a3d"
-  - name: commsApiSettingsScope
-    value: "api://agl-communications-api-microservice-qtrd/.default"
-  - name: commsApiSettingsUrl
-    value: "https://qtrdev-api.platform.agl.com.au/shared/communications/v1/v1/communications/sms"
-  - name: healthCheckEnvName
-    value: "qtrdev-api"   
+    value: "stccproductsapi$(environmentName)"      
