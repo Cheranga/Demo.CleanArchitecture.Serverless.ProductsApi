@@ -58,8 +58,6 @@ steps:
         -sgLocation "$(sgLocation)" 
         -sgName "$(sgName)" 
         -sgType "$(sgType)" 
-        -funcAppName "$(funcAppName)" 
-        -environmentName "$(environmentName)" 
-        -planName "$(planName)" 
-        -keyVaultName "$(keyVaultName)" 
+        -funcAppName "$(funcAppName)"         
+        -planName "$(planName)"         
                
