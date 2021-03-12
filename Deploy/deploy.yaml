@@ -58,6 +58,8 @@ steps:
         -sgLocation "$(sgLocation)" 
         -sgName "$(sgName)" 
         -sgType "$(sgType)" 
-        -funcAppName "$(funcAppName)"         
-        -planName "$(planName)"         
+        -funcAppName "$(funcAppName)" 
+        -planName "$(planName)" 
+        -planSku "$(planSku)" 
+        -planTier "$(planTier)" 
                
