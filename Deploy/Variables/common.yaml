@@ -1,6 +1,5 @@
 variables:
-  - name: azureResourceManagerConnection
-    value: Pay-As-You-Go
+  - group: CCSharedGroup
   - name: rgLocation
     value: Australia Southeast
   - name: createNewRg
