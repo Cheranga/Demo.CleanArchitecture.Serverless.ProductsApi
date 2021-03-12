@@ -8,5 +8,22 @@
       "Function": "Debug",
       "Host.Aggregator": "Debug"
     }
+  },
+  "openApi": {
+    "info": {
+      "version": "1.0.0",
+      "title": "Product API",
+      "description": "API to get, insert or update products.",
+      "termsOfService": "https://cchatangala.com/",
+      "contact": {
+        "name": "Cheranga",
+        "email": "blahblah@gmail.com",
+        "url": "https://cchatangala.com/"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://cheranga.mit-license.org/"
+      }
+    }
   }
 }

@@ -5,7 +5,6 @@ using Products.Application.Requests;
 using Products.Application.Responses;
 using Products.Domain;
 using Products.Domain.Commands;
-using Products.Domain.Queries;
 
 namespace Products.Application.Handlers
 {
@@ -20,20 +19,21 @@ namespace Products.Application.Handlers
 
         public async Task<Result<UpsertProductResponse>> Handle(UpsertProductRequest request, CancellationToken cancellationToken)
         {
-            var getProductQuery = new GetProductByCodeQuery
+            var getProductByCodeRequest = new GetProductByCodeRequest
             {
                 CorrelationId = request.CorrelationId,
                 Code = request.Code
             };
 
-            var getProductOperation = await _mediator.Send(getProductQuery, cancellationToken);
-            if (!getProductOperation.Status)
+            var operation = await _mediator.Send(getProductByCodeRequest, cancellationToken);
+            if (!operation.Status)
             {
-                return Result<UpsertProductResponse>.Failure(getProductOperation.Validation);
+                return Result<UpsertProductResponse>.Failure(operation.Validation);
             }
 
-            var product = getProductOperation.Data;
-            if (product == null)
+            var productResponse = operation.Data;
+
+            if (productResponse == null)
             {
                 return await CreateProductAsync(request, cancellationToken);
             }
