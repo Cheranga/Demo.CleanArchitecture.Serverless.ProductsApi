@@ -1,8 +1,8 @@
 ﻿# Things to do,
 
-- [] Swagger
-- [] Health checks
-- [] Versioning
+- [ ] Swagger
+- [ ] Health checks
+- [ ] Versioning
 
 
 
