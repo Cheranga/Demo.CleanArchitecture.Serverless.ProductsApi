@@ -11,7 +11,7 @@ variables:
   - name: sgType
     value: Standard_GRS
   - name: planName
-    value: "plan-$(cc-products)-$(environmentName)"
+    value: "plan-cc-products-$(environmentName)"
   - name: planSku
     value: Y1        
   - name: planTier
