@@ -1,6 +1,6 @@
 ﻿# Things to do,
 
-- [ ] Swagger
+- [x] Swagger
 - [ ] Health checks
 - [ ] Versioning
 

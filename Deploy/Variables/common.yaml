@@ -1,0 +1,13 @@
+variables:
+  - name: azureResourceManagerConnection
+    value: Pay-As-You-Go
+  - name: rgLocation
+    value: Australia Southeast
+  - name: createNewRg
+    value: true
+  - name: sharedStorageLocation
+    value: Australia Southeast
+  - name: sgLocation
+    value: Australia Southeast
+  - name: sgType
+    value: Standard_GRS
