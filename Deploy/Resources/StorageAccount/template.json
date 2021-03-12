@@ -5,7 +5,7 @@
         "rgName": {
             "type": "string",
             "defaultValue": "TBD"
-        },       
+        },
         "sgLocation": {
             "type": "string",
             "defaultValue": "TBD"
@@ -24,18 +24,15 @@
     "functions": [],
     "variables": {},
     "resources": [
-        {   
-            "name": "[parameters('sgName')]",
+        {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
+            "name": "[parameters('sgName')]",
             "location": "[parameters('sgLocation')]",
-            "kind": "StorageV2",
-            "tags": {
-                "displayName": "[parameters('sgName')]"
+            "sku": {
+                "name": "[parameters('sgType')]"
             },
-            "properties": {
-                "accountType": "[parameters('sgType')]"
-            }
+            "kind": "StorageV2"
         }
     ],
     "outputs": {
