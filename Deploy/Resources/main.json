@@ -1,9 +1,140 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
+    "parameters": {
+        "templateSas": {
+            "type": "securestring",
+            "defaultValue": "TBD"
+        },
+        "rgName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "rgLocation": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "buildNumber": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "sharedStorageName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "sharedContainerName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "sgLocation": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "sgName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "sgType": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "planName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "planSku": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "planTier": {
+            "type": "string",
+            "defaultValue": "TBD"
+        },
+        "funcAppName": {
+            "type": "string",
+            "defaultValue": "TBD"
+        }
+    },
     "functions": [],
-    "variables": {},
-    "resources": [],
+    "variables": {
+        "templateUri": "[concat('https://',parameters('sharedStorageName'),'.blob.core.windows.net/',parameters('sharedContainerName'))]",
+        "storageAccountDeployment": "[concat('stg-', parameters('sgName'),'-',parameters('buildNumber'))]",
+        "appInsightsDeployment": "[concat('appins-', parameters('funcAppName'),parameters('buildNumber'))]",
+        "aspDeployment": "[concat('asp-', parameters('funcAppName'),parameters('buildNumber'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/StorageAccount/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "rgName": {
+                        "value": "[parameters('rgName')]"
+                    },
+                    "sgLocation": {
+                        "value": "[parameters('sgLocation')]"
+                    },
+                    "sgName": {
+                        "value": "[parameters('sgName')]"
+                    },
+                    "sgType": {
+                        "value": "[parameters('sgType')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('appInsightsDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/AppInsights/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "name": {
+                        "value": "[parameters('funcAppName')]"
+                    },
+                    "rgLocation": {
+                        "value": "[parameters('rgLocation')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('aspDeployment')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateUri'),'/AppServicePlan/template.json','?', parameters('templateSas'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "planName": {
+                        "value": "[parameters('planName')]"
+                    },
+                    "planLocation": {
+                        "value": "[parameters('rgLocation')]"
+                    },
+                    "planSku": {
+                        "value": "[parameters('planSku')]"
+                    },
+                    "planTier": {
+                        "value": "[parameters('planTier')]"
+                    }
+                }
+            }
+        }
+    ],
     "outputs": {}
 }
