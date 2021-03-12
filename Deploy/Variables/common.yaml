@@ -1,5 +1,4 @@
 variables:
-  - group: CCSharedGroup
   - name: rgLocation
     value: Australia Southeast
   - name: createNewRg
